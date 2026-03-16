@@ -26,7 +26,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.database_version }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, Symfony ${{ matrix.symfony }}, MySQL ${{ matrix.database_version }}, Legacy ${{ matrix.legacy }}"
 
         strategy:
             fail-fast: false
@@ -37,10 +37,12 @@ jobs:
                 node: ["22.x"]
                 database: ["mysql"]
                 database_version: ["8.4"]
+                legacy: [true, false]
 
         env:
             APP_ENV: test
             DATABASE_URL: "mysql://root:root@127.0.0.1/sylius?serverVersion=${{ matrix.database_version }}"
+            TEST_SYLIUS_WISHLIST_PDF_LEGACY: "${{ matrix.legacy }}"
 
         steps:
             -
